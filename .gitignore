@@ -1,0 +1,4 @@
+node_modules/
+.wp-playground/
+*.log
+.DS_Store

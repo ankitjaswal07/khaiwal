@@ -1,0 +1,16 @@
+<?php if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+<footer class="site-footer">
+    <div class="container footer-main">
+        <div class="footer-about">
+            <a class="brand brand-footer" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php if ( has_custom_logo() ) { echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'brand-custom-logo', 'alt' => '' ) ); } else { ?><span class="brand-mark" aria-hidden="true"><span>K</span><i></i></span><?php } ?><span class="brand-type"><strong><?php bloginfo( 'name' ); ?><b>.</b></strong><small><?php echo khaiwal_text( 'RESULTS & CHARTS', 'रिज़ल्ट और चार्ट' ); ?></small></span></a>
+            <p><?php echo khaiwal_text( 'Your everyday destination for game results, charts and a little more clarity.', 'गेम रिज़ल्ट, चार्ट और स्पष्ट जानकारी के लिए आपकी रोज़ाना की जगह।' ); ?></p>
+        </div>
+        <div class="footer-links"><h3><?php echo khaiwal_text( 'EXPLORE', 'देखें' ); ?></h3><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo khaiwal_text( 'Home', 'होम' ); ?></a><a href="<?php echo esc_url( khaiwal_chart_url() ); ?>"><?php echo khaiwal_text( 'All charts', 'सभी चार्ट' ); ?></a><a href="<?php echo esc_url( home_url( '/#journal' ) ); ?>"><?php echo khaiwal_text( 'The journal', 'जर्नल' ); ?></a></div>
+        <div class="footer-links"><h3><?php echo khaiwal_text( 'INFORMATION', 'जानकारी' ); ?></h3><a href="<?php echo esc_url( khaiwal_contact_url() ); ?>"><?php echo khaiwal_text( 'Contact us', 'संपर्क करें' ); ?></a><a href="<?php echo esc_url( wp_login_url() ); ?>" target="_blank" rel="noopener"><?php echo khaiwal_text( 'Login', 'लॉगिन' ); ?> <?php echo khaiwal_text( '(opens in a new tab)', '(नई टैब में खुलेगा)', 'span', 'screen-reader-text' ); ?></a><?php if ( get_privacy_policy_url() ) : ?><a href="<?php echo esc_url( get_privacy_policy_url() ); ?>"><?php echo khaiwal_text( 'Privacy policy', 'गोपनीयता नीति' ); ?></a><?php endif; ?></div>
+        <div class="footer-note"><span class="footer-note-icon"><?php echo khaiwal_icon( 'shield' ); ?></span><div><strong><?php echo khaiwal_text( 'A note from us', 'हमारी ओर से एक नोट' ); ?></strong><p><?php echo khaiwal_text( 'This website is for information only. Please be aware of your local laws and the risks of gambling.', 'यह वेबसाइट केवल जानकारी के लिए है। अपने स्थानीय कानूनों और जुए के जोखिमों के प्रति सावधान रहें।' ); ?></p></div></div>
+    </div>
+    <div class="footer-bottom"><div class="container"><span>© <?php echo esc_html( khaiwal_now()->format( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php echo khaiwal_text( 'All rights reserved.', 'सर्वाधिकार सुरक्षित।' ); ?></span><span><?php echo khaiwal_text( 'MADE FOR THE EVERYDAY', 'हर दिन के लिए' ); ?> <b><?php echo khaiwal_icon( 'spark' ); ?></b></span></div></div>
+</footer>
+<?php wp_footer(); ?>
+</body>
+</html>
