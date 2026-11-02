@@ -1,0 +1,3 @@
+<?php if ( ! defined( 'ABSPATH' ) ) { exit; } get_header(); ?>
+<main id="main"><section class="page-hero error-hero"><div class="container"><div class="eyebrow"><span class="eyebrow-dot"></span>404</div><h1><?php echo khaiwal_text( 'Page not found', 'पेज नहीं मिला' ); ?><em>.</em></h1><p><?php echo khaiwal_text( 'The page you are looking for is not here.', 'जिस पेज को आप खोज रहे हैं वह यहाँ नहीं है।' ); ?></p><a class="button button-yellow" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo khaiwal_text( 'Back to home', 'होम पर जाएँ' ); ?><span class="button-icon"><?php echo khaiwal_icon( 'arrow' ); ?></span></a></div></section></main>
+<?php get_footer(); ?>

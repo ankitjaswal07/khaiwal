@@ -1,0 +1,3 @@
+<?php if ( ! defined( 'ABSPATH' ) ) { exit; } get_header(); ?>
+<main id="main"><?php while ( have_posts() ) : the_post(); ?><section class="page-hero"><div class="container"><div class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo khaiwal_text( 'Home', 'होम' ); ?></a><span>/</span><?php the_title(); ?></div><h1><?php the_title(); ?><em>.</em></h1></div></section><article class="section container prose"><?php the_content(); wp_link_pages(); if ( comments_open() || get_comments_number() ) { comments_template(); } ?></article><?php endwhile; ?></main>
+<?php get_footer(); ?>
