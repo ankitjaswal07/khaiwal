@@ -7,6 +7,31 @@
   try { saved = localStorage.getItem('khaiwal-language'); } catch (e) { saved = null; }
   if (saved === 'hi') language = 'hi';
 
+  // A result is a two-digit number; an unannounced one is shown as the bouncing WAIT word.
+  function waitHTML() {
+    var letters = '';
+    'WAIT'.split('').forEach(function (letter, i) { letters += '<span aria-hidden="true" style="--i:' + i + '">' + letter + '</span>'; });
+    return '<span class="wait-word" role="img" aria-label="Wait: result not announced yet">' + letters + '</span>';
+  }
+  function setResult(el, value) {
+    if (!el) return false;
+    var published = /^\d{2}$/.test(value || '');
+    if (published) {
+      if (el.textContent !== value || el.querySelector('.wait-word')) el.textContent = value;
+    } else if (!el.querySelector('.wait-word')) {
+      el.innerHTML = waitHTML();
+    }
+    el.classList.toggle('is-waiting', !published);
+    return published;
+  }
+
+  function updateTicker(state) {
+    document.querySelectorAll('[data-ticker-slug]').forEach(function (el) {
+      var game = state && state.cards && state.cards[el.getAttribute('data-ticker-slug')];
+      if (game) setResult(el, game.today || '');
+    });
+  }
+
   function localDate(date, options) {
     try { return new Intl.DateTimeFormat(language === 'hi' ? 'hi-IN' : 'en-IN', Object.assign({ timeZone: 'Asia/Kolkata' }, options)).format(date); }
     catch (e) { return ''; }
@@ -121,7 +146,8 @@
       text(select(prefix + '-hi'), event ? (prefix === 'current' ? '/ ' : '') + event.hindi : '');
       if (prefix !== 'recent') text(select(prefix + '-time'), event && event.time ? event.time + ' IST' : '—');
       if (prefix !== 'next') {
-        text(select(prefix + '-result'), event && event.result ? event.result : '—');
+        if (prefix === 'current' && event) setResult(select('current-result'), event.result || '');
+        else text(select(prefix + '-result'), event && event.result ? event.result : '—');
         eventDate(select(prefix + '-date'), event && event.date);
       }
       eventLink(select(prefix + '-link'), event);
@@ -132,9 +158,7 @@
         if (!game) return;
         var published = /^\d{2}$/.test(game.today || '');
         text(card.querySelector('.previous-number'), game.previous || '—');
-        var current = card.querySelector('.current-number');
-        text(current, published ? game.today : '— —');
-        if (current) current.classList.toggle('is-waiting', !published);
+        setResult(card.querySelector('.current-number'), published ? game.today : '');
         var status = card.querySelector('.result-status');
         if (status) {
           status.classList.toggle('is-declared', published);
@@ -146,14 +170,17 @@
         var cell = row.querySelector('[data-chart-date]');
         if (cell) row.classList.toggle('is-today', cell.getAttribute('data-chart-date') === state.today);
       });
+      updateTicker(state);
       if (!state.chart) return;
       document.querySelectorAll('[data-chart-cell]').forEach(function (cell) {
         var values = state.chart[cell.getAttribute('data-game-slug')] || {};
         var result = values[cell.getAttribute('data-chart-date')] || '';
         var published = /^\d{2}$/.test(result);
-        text(cell, published ? result : '—');
+        var waiting = !published && cell.getAttribute('data-chart-date') === state.today;
+        if (waiting) setResult(cell, ''); else if (published) setResult(cell, result); else text(cell, '—');
         cell.classList.toggle('has-result', published);
-        cell.classList.toggle('is-unavailable', !published);
+        cell.classList.toggle('is-unavailable', !published && !waiting);
+        cell.classList.toggle('is-waiting', waiting);
       });
     }
     function refreshUnavailable() {
@@ -198,6 +225,75 @@
   }
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Notice bar: scrolling latest results. Without JS (or with reduced motion) it is a plain scrollable row.
+  var marquee = document.querySelector('[data-marquee]');
+  if (marquee) {
+    var list = marquee.querySelector('[data-marquee-list]');
+    var toggle = document.querySelector('[data-marquee-toggle]');
+    if (list && !reduced) {
+      var track = document.createElement('div');
+      track.className = 'marquee-track';
+      list.parentNode.insertBefore(track, list);
+      track.appendChild(list);
+      var clone = list.cloneNode(true);
+      clone.removeAttribute('data-marquee-list');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('a').forEach(function (a) { a.setAttribute('tabindex', '-1'); });
+      track.appendChild(clone);
+      var sizeMarquee = function () {
+        var width = list.scrollWidth;
+        if (width > 0) marquee.style.setProperty('--marquee-duration', Math.max(30, Math.round(width / 55)) + 's');
+      };
+      marquee.classList.add('is-animated');
+      sizeMarquee();
+      window.addEventListener('resize', sizeMarquee);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeMarquee);
+      if (toggle) {
+        toggle.hidden = false;
+        toggle.addEventListener('click', function () {
+          var paused = marquee.classList.toggle('is-paused');
+          toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+          toggle.setAttribute('aria-label', toggle.getAttribute(paused ? 'data-label-play' : 'data-label-pause'));
+        });
+      }
+    }
+    // Pages without the home dashboard still keep the ticker current.
+    var tickerUrl = marquee.getAttribute('data-dashboard-url');
+    if (!dashboard && tickerUrl && window.fetch && window.URL) {
+      var refreshTicker = function () {
+        if (document.hidden) return;
+        var url;
+        try { url = new URL(tickerUrl, window.location.href); } catch (e) { return; }
+        if (url.origin !== window.location.origin) return;
+        fetch(url.href, { credentials: 'same-origin', cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (state) {
+          if (state) { updateTicker(state); updateDates(); }
+        }).catch(function () { /* The server-rendered ticker stays. */ });
+      };
+      window.setInterval(refreshTicker, 60000);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshTicker(); });
+      refreshTicker();
+    }
+  }
+
+  // Sticky header: shrink a little once scrolled, and publish its height for anchor offsets.
+  var siteHeader = document.querySelector('.site-header');
+  if (siteHeader) {
+    var headerTicking = false;
+    var applyHeader = function () {
+      headerTicking = false;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var compact = siteHeader.classList.contains('is-compact');
+      if (!compact && y > 90) siteHeader.classList.add('is-compact');
+      else if (compact && y < 20) siteHeader.classList.remove('is-compact');
+      document.documentElement.style.setProperty('--header-h', siteHeader.offsetHeight + 'px');
+    };
+    var queueHeader = function () { if (!headerTicking) { headerTicking = true; window.requestAnimationFrame(applyHeader); } };
+    window.addEventListener('scroll', queueHeader, { passive: true });
+    window.addEventListener('resize', queueHeader);
+    applyHeader();
+  }
+
   var journal = document.querySelector('.journal-swiper');
   if (journal && typeof window.Swiper === 'function') {
     new window.Swiper(journal, {

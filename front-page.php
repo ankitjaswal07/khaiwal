@@ -9,7 +9,7 @@ $archive_date = khaiwal_catalog()['snapshot_date'];
 ?>
 <main id="main">
     <section class="hero">
-        <div class="hero-image" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-gold.webp' ); ?>')" aria-hidden="true"></div>
+        <div class="hero-image" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/images/hero-chart.webp' ); ?>')" aria-hidden="true"></div>
         <div class="hero-overlay"></div>
         <div class="container hero-inner">
             <div class="hero-copy">
@@ -59,9 +59,11 @@ $archive_date = khaiwal_catalog()['snapshot_date'];
         </div>
     </section>
 
+    <?php get_template_part( 'template-parts/home-about' ); ?>
+
     <section class="section journal-section" id="journal">
         <div class="container">
-            <div class="section-heading journal-heading" data-reveal><div><div class="eyebrow dark-eyebrow"><span class="section-number">04 /</span> <?php echo khaiwal_text( 'THE KHAIWAL JOURNAL', 'खाईवाल जर्नल' ); ?></div><h2><?php echo khaiwal_text( 'A little something to read', 'कुछ पढ़ने के लिए' ); ?><span class="heading-dot">.</span></h2><p><?php echo khaiwal_text( 'Fresh perspectives, helpful guides and more.', 'नई जानकारी, उपयोगी गाइड और बहुत कुछ।' ); ?></p></div><div class="slider-controls"><button type="button" class="slider-prev" aria-label="<?php esc_attr_e( 'Previous story', 'khaiwal' ); ?>" data-aria-en="Previous story" data-aria-hi="पिछली कहानी"><?php echo khaiwal_icon( 'left' ); ?></button><button type="button" class="slider-next" aria-label="<?php esc_attr_e( 'Next story', 'khaiwal' ); ?>" data-aria-en="Next story" data-aria-hi="अगली कहानी"><?php echo khaiwal_icon( 'arrow' ); ?></button></div></div>
+            <div class="section-heading journal-heading" data-reveal><div><div class="eyebrow dark-eyebrow"><span class="section-number">05 /</span> <?php echo khaiwal_text( 'THE KHAIWAL JOURNAL', 'खाईवाल जर्नल' ); ?></div><h2><?php echo khaiwal_text( 'A little something to read', 'कुछ पढ़ने के लिए' ); ?><span class="heading-dot">.</span></h2><p><?php echo khaiwal_text( 'Fresh perspectives, helpful guides and more.', 'नई जानकारी, उपयोगी गाइड और बहुत कुछ।' ); ?></p></div><div class="slider-controls"><button type="button" class="slider-prev" aria-label="<?php esc_attr_e( 'Previous story', 'khaiwal' ); ?>" data-aria-en="Previous story" data-aria-hi="पिछली कहानी"><?php echo khaiwal_icon( 'left' ); ?></button><button type="button" class="slider-next" aria-label="<?php esc_attr_e( 'Next story', 'khaiwal' ); ?>" data-aria-en="Next story" data-aria-hi="अगली कहानी"><?php echo khaiwal_icon( 'arrow' ); ?></button></div></div>
             <?php $stories = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 6, 'ignore_sticky_posts' => true, 'no_found_rows' => true ) ); ?>
             <?php if ( $stories->have_posts() ) : ?>
             <div class="swiper journal-swiper" data-reveal><div class="swiper-wrapper">
@@ -70,9 +72,11 @@ $archive_date = khaiwal_catalog()['snapshot_date'];
                 <?php endwhile; wp_reset_postdata(); ?>
             </div><div class="swiper-pagination journal-pagination"></div></div>
             <?php else : ?><p><?php echo khaiwal_text( 'New stories will appear here when published.', 'नई कहानियाँ प्रकाशित होने पर यहाँ दिखाई देंगी।' ); ?></p><?php endif; ?>
+            <p class="journal-more"><a class="button button-outline-dark" href="<?php echo esc_url( khaiwal_info_url() . '#blog' ); ?>"><?php echo khaiwal_text( 'Browse all blog posts', 'सभी ब्लॉग पोस्ट देखें' ); ?> <?php echo khaiwal_icon( 'arrow' ); ?></a></p>
         </div>
     </section>
     <?php get_template_part( 'template-parts/faqs' ); ?>
+    <?php get_template_part( 'template-parts/home-info' ); ?>
     <?php if ( is_page() && have_posts() ) : while ( have_posts() ) : the_post(); if ( trim( get_the_content() ) ) : ?><section class="section editor-content"><div class="container prose"><?php the_content(); ?></div></section><?php endif; endwhile; endif; ?>
     <section class="bottom-cta"><div class="container bottom-cta-inner"><div><span class="eyebrow"><?php echo khaiwal_text( 'THE RESULTS ARE IN', 'रिज़ल्ट देखें' ); ?></span><h2><?php echo khaiwal_text( 'Ready to explore?', 'देखने के लिए तैयार हैं?' ); ?></h2><p><?php echo khaiwal_text( 'All your charts. One simple place.', 'आपके सभी चार्ट। एक आसान जगह।' ); ?></p></div><a class="button button-dark" href="<?php echo esc_url( khaiwal_chart_url() ); ?>"><?php echo khaiwal_text( 'Browse all charts', 'सभी चार्ट देखें' ); ?> <span class="button-icon"><?php echo khaiwal_icon( 'arrow' ); ?></span></a><span class="cta-star" aria-hidden="true"><?php echo khaiwal_icon( 'spark' ); ?></span></div></section>
 </main>

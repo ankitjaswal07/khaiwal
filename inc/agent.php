@@ -108,6 +108,7 @@ function khaiwal_llms_text( $full = false ) {
     $out[] = '## Core pages';
     $out[] = '- [Home](' . home_url( '/' ) . '): today\'s result for every game, current/next game with countdown, full monthly chart and FAQs.';
     $out[] = '- [Chart / game directory](' . khaiwal_chart_url() . '): every game with its usual time and latest status.';
+    $out[] = '- [Info](' . khaiwal_info_url() . '): About us, blog, FAQs, privacy policy, disclaimer and terms & conditions on one page.';
     $out[] = '- [Contact](' . khaiwal_contact_url() . '): report a wrong or missing result.';
     $out[] = '';
     $out[] = '## Games';

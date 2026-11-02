@@ -177,6 +177,7 @@ function khaiwal_page_kind() {
     if ( is_singular( 'khaiwal_game' ) ) { return 'game'; }
     if ( is_page_template( 'page-chart.php' ) || ( is_page() && is_page( 'chart' ) ) ) { return 'chart'; }
     if ( is_page_template( 'page-contact.php' ) || ( is_page() && is_page( 'contact' ) ) ) { return 'contact'; }
+    if ( khaiwal_is_info_page() ) { return 'info'; }
     if ( is_singular( 'post' ) ) { return 'post'; }
     if ( is_page() ) { return 'page'; }
     if ( is_archive() || is_home() ) { return 'archive'; }
@@ -258,6 +259,14 @@ function khaiwal_seo_context() {
             $c['description'] = khaiwal_trim( sprintf( 'Contact the %s team about a result, a chart or the website. Send a message and we will reply by email.', $site ) );
             $c['url'] = get_permalink( get_queried_object_id() );
             break;
+        case 'info':
+            $id = get_queried_object_id();
+            $c['title'] = sprintf( 'About %1$s: FAQs, Blog, Privacy Policy, Disclaimer & Terms', $site );
+            $excerpt = has_excerpt( $id ) ? get_the_excerpt( $id ) : '';
+            $c['description'] = khaiwal_trim( $excerpt ? $excerpt : sprintf( 'All about %s in one page: who we are, the blog, answers to common questions, privacy policy, disclaimer and terms & conditions. Information only.', $site ) );
+            $c['url'] = get_permalink( $id );
+            $c['modified'] = (int) get_post_modified_time( 'U', true, $id );
+            break;
         case 'post':
         case 'page':
             $id = get_queried_object_id();
@@ -295,7 +304,7 @@ function khaiwal_seo_context() {
 function khaiwal_seo_document_title( $title ) {
     if ( ! khaiwal_seo_enabled() ) { return $title; }
     $c = khaiwal_seo_context();
-    return in_array( $c['kind'], array( 'home', 'chart', 'game', 'contact' ), true ) && $c['title'] ? esc_html( $c['title'] ) : $title;
+    return in_array( $c['kind'], array( 'home', 'chart', 'game', 'contact', 'info' ), true ) && $c['title'] ? esc_html( $c['title'] ) : $title;
 }
 add_filter( 'pre_get_document_title', 'khaiwal_seo_document_title', 20 );
 
@@ -320,7 +329,7 @@ function khaiwal_seo_head() {
     if ( $c['url'] && ! $c['noindex'] ) { $tags[] = '<link rel="canonical" href="' . esc_url( $c['url'] ) . '">'; }
     $tags[] = '<meta name="theme-color" content="#ffd800">';
     if ( ! $c['noindex'] && 'other' !== $c['kind'] ) {
-        $og_title = in_array( $c['kind'], array( 'home', 'chart', 'game', 'contact' ), true ) ? $c['title'] : wp_get_document_title();
+        $og_title = in_array( $c['kind'], array( 'home', 'chart', 'game', 'contact', 'info' ), true ) ? $c['title'] : wp_get_document_title();
         $tags[] = '<meta property="og:locale" content="en_IN">';
         $tags[] = '<meta property="og:locale:alternate" content="hi_IN">';
         $tags[] = '<meta property="og:site_name" content="' . esc_attr( khaiwal_site_name() ) . '">';
@@ -336,7 +345,7 @@ function khaiwal_seo_head() {
             $tags[] = '<meta property="article:published_time" content="' . esc_attr( get_the_date( 'c', get_queried_object_id() ) ) . '">';
             $tags[] = '<meta property="article:modified_time" content="' . esc_attr( get_the_modified_date( 'c', get_queried_object_id() ) ) . '">';
         }
-        if ( in_array( $c['kind'], array( 'home', 'chart', 'game' ), true ) ) { $tags[] = '<meta property="og:updated_time" content="' . esc_attr( gmdate( 'c', $c['modified'] ) ) . '">'; }
+        if ( in_array( $c['kind'], array( 'home', 'chart', 'game', 'info' ), true ) ) { $tags[] = '<meta property="og:updated_time" content="' . esc_attr( gmdate( 'c', $c['modified'] ) ) . '">'; }
         $tags[] = '<meta name="twitter:card" content="summary_large_image">';
         $tags[] = '<meta name="twitter:title" content="' . esc_attr( $og_title ) . '">';
         if ( $c['description'] ) { $tags[] = '<meta name="twitter:description" content="' . esc_attr( $c['description'] ) . '">'; }
@@ -382,9 +391,9 @@ function khaiwal_schema_graph() {
     $graph[] = $org;
     $graph[] = array( '@type' => 'WebSite', '@id' => $site_id, 'url' => $home, 'name' => $site, 'description' => khaiwal_trim( get_bloginfo( 'description' ) ), 'inLanguage' => array( 'en-IN', 'hi-IN' ), 'publisher' => array( '@id' => $org_id ) );
 
-    $types = array( 'home' => 'WebPage', 'chart' => 'CollectionPage', 'game' => 'WebPage', 'contact' => 'ContactPage', 'post' => 'WebPage', 'page' => 'WebPage' );
+    $types = array( 'home' => 'WebPage', 'chart' => 'CollectionPage', 'game' => 'WebPage', 'contact' => 'ContactPage', 'info' => 'AboutPage', 'post' => 'WebPage', 'page' => 'WebPage' );
     $page = array( '@type' => $types[ $kind ], '@id' => $page_id, 'url' => $url, 'name' => in_array( $kind, array( 'post', 'page' ), true ) ? get_the_title( get_queried_object_id() ) : $c['title'], 'description' => $c['description'], 'isPartOf' => array( '@id' => $site_id ), 'inLanguage' => 'en-IN', 'primaryImageOfPage' => array( '@type' => 'ImageObject', 'url' => $c['image']['url'], 'width' => $c['image']['width'], 'height' => $c['image']['height'] ) );
-    if ( in_array( $kind, array( 'home', 'chart', 'game' ), true ) ) {
+    if ( in_array( $kind, array( 'home', 'chart', 'game', 'info' ), true ) ) {
         $page['dateModified'] = gmdate( 'c', $c['modified'] );
         $page['speakable'] = array( '@type' => 'SpeakableSpecification', 'cssSelector' => array( '.answer-block', 'h1' ) );
     }
@@ -464,6 +473,12 @@ function khaiwal_seo_jsonld() {
         } else {
             $graph = array( $dataset );
         }
+    }
+    if ( 'info' === $kind ) {
+        // FAQPage markup comes from the editable FAQs section, with or without an SEO plugin.
+        $info_url = get_permalink( get_queried_object_id() );
+        $faq = khaiwal_schema_faq( khaiwal_info_faq_items( (string) get_post_field( 'post_content', get_queried_object_id() ) ), $info_url );
+        if ( $faq ) { $graph[] = $faq; }
     }
     if ( ! $graph ) { return; }
     echo "\n<script type=\"application/ld+json\" id=\"khaiwal-jsonld\">" . khaiwal_schema_json( array( '@context' => 'https://schema.org', '@graph' => array_values( $graph ) ) ) . "</script>\n"; // phpcs:ignore WordPress.Security.EscapeOutput -- JSON-encoded with HEX_TAG/HEX_AMP.
@@ -553,7 +568,36 @@ function khaiwal_game_about( $game ) {
     $cov_en = $coverage['count'] ? sprintf( ' %1$d dated results from %2$s to %3$s are recorded.', $coverage['count'], khaiwal_date_label( $coverage['first'] ), khaiwal_date_label( $coverage['last'] ) ) : ' No dated results are recorded yet.';
     $cov_hi = $coverage['count'] ? sprintf( ' %2$s से %3$s तक के %1$d तारीख-वार रिज़ल्ट दर्ज हैं।', $coverage['count'], khaiwal_date_label( $coverage['first'] ), khaiwal_date_label( $coverage['last'] ) ) : ' अभी कोई तारीख-वार रिज़ल्ट दर्ज नहीं है।';
     return array(
-        sprintf( '%1$s (%2$s) is one of the %3$d games listed on %4$s. %5$s This page shows the selected month and the month before it, built from a dated archive snapshot and results published by our editors.%6$s Missing dates appear as dashes; no value is ever predicted.', $game['name'], $game['hindi'], $count, khaiwal_site_name(), $time_en, $cov_en ),
-        sprintf( '%1$s (%2$s) %4$s पर सूचीबद्ध %3$d गेम में से एक है। %5$s इस पेज पर चुना हुआ महीना और उससे पिछला महीना दिखता है, जो दिनांकित संग्रह और हमारे संपादकों द्वारा प्रकाशित रिज़ल्ट से बना है।%6$s छूटी हुई तारीखें डैश के रूप में दिखती हैं; कोई मान अनुमानित नहीं होता।', $game['name'], $game['hindi'], $count, khaiwal_site_name(), $time_hi, $cov_hi )
+        sprintf( '%1$s (%2$s) is one of the %3$d games listed on %4$s. %5$s This page shows the selected month and the month before it, built from dated records and results published by our editors.%6$s Missing dates appear as dashes; no value is ever predicted.', $game['name'], $game['hindi'], $count, khaiwal_site_name(), $time_en, $cov_en ),
+        sprintf( '%1$s (%2$s) %4$s पर सूचीबद्ध %3$d गेम में से एक है। %5$s इस पेज पर चुना हुआ महीना और उससे पिछला महीना दिखता है, जो दिनांकित रिकॉर्ड और हमारे संपादकों द्वारा प्रकाशित रिज़ल्ट से बना है।%6$s छूटी हुई तारीखें डैश के रूप में दिखती हैं; कोई मान अनुमानित नहीं होता।', $game['name'], $game['hindi'], $count, khaiwal_site_name(), $time_hi, $cov_hi )
     );
 }
+
+/* ---------------------------------------------------------------------------------------------
+ * Yoast SEO companions: Yoast owns titles, canonical, Open Graph and the main schema graph.
+ * These only fill gaps it cannot know about (results change daily).
+ * ------------------------------------------------------------------------------------------ */
+
+/** Use the theme's description when the editor left the Yoast meta description empty. */
+function khaiwal_yoast_metadesc( $description ) {
+    if ( '' !== trim( (string) $description ) || is_admin() ) { return $description; }
+    $kind = khaiwal_page_kind();
+    if ( ! in_array( $kind, array( 'home', 'chart', 'game', 'contact', 'info' ), true ) ) { return $description; }
+    $c = khaiwal_seo_context();
+    return $c['description'] ? $c['description'] : $description;
+}
+add_filter( 'wpseo_metadesc', 'khaiwal_yoast_metadesc', 20 );
+
+/** Yoast sitemap: games and the chart page change whenever a result is published. */
+function khaiwal_yoast_sitemap_entry( $url, $type, $post ) {
+    if ( 'post' !== $type || ! is_object( $post ) || ! is_array( $url ) ) { return $url; }
+    if ( 'khaiwal_game' === $post->post_type ) {
+        $mods = khaiwal_game_lastmods();
+        $time = max( (int) strtotime( $post->post_modified_gmt . ' UTC' ), isset( $mods[ $post->post_name ] ) ? $mods[ $post->post_name ] : 0 );
+        if ( $time ) { $url['mod'] = gmdate( 'c', $time ); }
+    } elseif ( 'page' === $post->post_type && (int) $post->ID === khaiwal_chart_page_id() ) {
+        $url['mod'] = gmdate( 'c', max( khaiwal_results_modified_time(), (int) strtotime( $post->post_modified_gmt . ' UTC' ) ) );
+    }
+    return $url;
+}
+add_filter( 'wpseo_sitemap_entry', 'khaiwal_yoast_sitemap_entry', 10, 3 );

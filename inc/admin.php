@@ -130,21 +130,24 @@ add_action( 'admin_post_khaiwal_import_results', 'khaiwal_import_results' );
 function khaiwal_send_message() {
     $return = khaiwal_contact_url();
     // Reject array-shaped fields before passing untrusted input to string functions.
-    foreach ( array( 'khaiwal_contact_nonce', 'name', 'email', 'message', 'website' ) as $field ) {
+    foreach ( array( 'khaiwal_contact_nonce', 'name', 'email', 'phone', 'message', 'website' ) as $field ) {
         if ( isset( $_POST[ $field ] ) && ! is_string( $_POST[ $field ] ) ) { wp_safe_redirect( add_query_arg( 'message', 'error', $return ) ); exit; }
     }
     if ( ! isset( $_POST['khaiwal_contact_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['khaiwal_contact_nonce'] ) ), 'khaiwal_contact' ) ) { wp_safe_redirect( add_query_arg( 'message', 'error', $return ) ); exit; }
     $name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
     $email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
     $body = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+    $phone = isset( $_POST['phone'] ) ? preg_replace( '/[^0-9+\-\s()]/', '', sanitize_text_field( wp_unslash( $_POST['phone'] ) ) ) : '';
+    if ( strlen( preg_replace( '/\D/', '', $phone ) ) > 15 ) { $phone = ''; }
     $honeypot = isset( $_POST['website'] ) ? trim( wp_unslash( $_POST['website'] ) ) : '';
     if ( $honeypot || ! $name || strlen( $name ) > 400 || ! is_email( $email ) || strlen( $email ) > 200 || ! $body || strlen( $body ) > 20000 ) { wp_safe_redirect( add_query_arg( 'message', 'error', $return ) ); exit; }
     $address = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
     $rate_key = 'khaiwal_contact_' . md5( $address );
     if ( get_transient( $rate_key ) ) { wp_safe_redirect( add_query_arg( 'message', 'error', $return ) ); exit; }
     set_transient( $rate_key, 1, MINUTE_IN_SECONDS );
-    $sent = wp_mail( get_option( 'admin_email' ), 'Website enquiry from ' . $name, $body . "\n\nFrom: " . $name . ' <' . $email . '>', array( 'Reply-To: ' . $email ) );
-    wp_safe_redirect( add_query_arg( 'message', $sent ? 'sent' : 'error', $return ) ); exit;
+    $stored = khaiwal_store_contact( $name, $email, $phone, $body ); // The dashboard contact list is the reliable record; email is a bonus.
+    $sent = wp_mail( get_option( 'admin_email' ), 'Website enquiry from ' . $name, $body . "\n\nFrom: " . $name . ' <' . $email . '>' . ( $phone ? "\nPhone: " . $phone : '' ), array( 'Reply-To: ' . $email ) );
+    wp_safe_redirect( add_query_arg( 'message', ( $sent || $stored ) ? 'sent' : 'error', $return ) ); exit;
 }
 add_action( 'admin_post_nopriv_khaiwal_contact', 'khaiwal_send_message' );
 add_action( 'admin_post_khaiwal_contact', 'khaiwal_send_message' );

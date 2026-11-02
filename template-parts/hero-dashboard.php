@@ -14,7 +14,7 @@ $countdown = $next ? sprintf( '%02d:%02d:%02d', floor( $seconds / 3600 ), floor(
                 <a class="dashboard-game-name" data-dashboard-current-link href="<?php echo esc_url( $current ? $current['url'] : khaiwal_chart_url() ); ?>"><span data-dashboard-current-name><?php echo esc_html( $current ? $current['name'] : 'No scheduled game' ); ?></span> <small lang="hi" data-dashboard-current-hi><?php echo esc_html( $current ? '/ ' . $current['hindi'] : '' ); ?></small></a>
                 <div class="dashboard-game-time"><?php echo khaiwal_icon( 'clock' ); ?> <span data-dashboard-current-time><?php echo esc_html( $current ? $current['time'] . ' IST' : '—' ); ?></span><i></i><time data-dashboard-current-date datetime="<?php echo esc_attr( $current ? $current['date'] : '' ); ?>"><?php echo esc_html( $current ? date_i18n( 'j M', strtotime( $current['date'] . ' 12:00:00' ) ) : '—' ); ?></time></div>
             </div>
-            <div class="dashboard-number"><small><?php echo khaiwal_text( 'Result', 'रिज़ल्ट' ); ?></small><strong data-dashboard-current-result><?php echo esc_html( $current && $current['result'] !== '' ? $current['result'] : '—' ); ?></strong></div>
+            <div class="dashboard-number"><small><?php echo khaiwal_text( 'Result', 'रिज़ल्ट' ); ?></small><strong data-dashboard-current-result><?php echo $current ? khaiwal_result_html( $current['result'] ) : '—'; // phpcs:ignore WordPress.Security.EscapeOutput ?></strong></div>
         </div>
     </div>
     <div class="dashboard-lower">
