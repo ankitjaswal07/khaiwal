@@ -28,9 +28,11 @@ function khaiwal_register_types() {
         'rewrite' => array( 'slug' => 'games', 'with_front' => false ), 'has_archive' => false,
     ) );
     register_post_type( 'khaiwal_result', array(
-        'labels' => array( 'name' => __( 'Game results', 'khaiwal' ), 'singular_name' => __( 'Game result', 'khaiwal' ), 'add_new_item' => __( 'Publish a result', 'khaiwal' ) ),
-        'public' => false, 'show_ui' => true, 'show_in_menu' => true, 'show_in_rest' => false,
-        'menu_icon' => 'dashicons-calendar-alt', 'supports' => array( 'title' ),
+        'labels' => array( 'name' => __( 'Game results', 'khaiwal' ), 'singular_name' => __( 'Game result', 'khaiwal' ), 'add_new' => __( 'Add single result', 'khaiwal' ), 'add_new_item' => __( 'Publish a result', 'khaiwal' ), 'all_items' => __( 'All results', 'khaiwal' ), 'edit_item' => __( 'Edit result', 'khaiwal' ) ),
+        // Results never have an editor-entered title: it is generated from the game and date.
+        // The menu lives under the Publish results page registered in inc/publish.php.
+        'public' => false, 'show_ui' => true, 'show_in_menu' => 'khaiwal-publish', 'show_in_rest' => false,
+        'supports' => false,
     ) );
 }
 add_action( 'init', 'khaiwal_register_types' );

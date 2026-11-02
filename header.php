@@ -14,6 +14,8 @@
         <div class="container utility-inner">
             <span class="utility-message"><span class="status-dot"></span><?php echo khaiwal_text( 'YOUR EVERYDAY RESULTS DESTINATION', 'आपके रोज़ाना रिज़ल्ट की जगह' ); ?></span>
             <div class="utility-right">
+                <?php get_template_part( 'template-parts/utility', 'account' ); ?>
+                <span class="utility-divider"></span>
                 <span class="utility-clock"><?php echo khaiwal_icon( 'clock' ); ?> <time data-ist-clock><?php echo esc_html( khaiwal_now()->format( 'D, M j, Y  •  g:i A' ) ); ?></time> <span>IST</span></span>
                 <span class="utility-divider"></span>
                 <div class="language-switch" role="group" aria-label="Language / भाषा">
@@ -36,7 +38,8 @@
                         <li><a class="nav-pill <?php echo is_front_page() ? 'is-active' : ''; ?>" <?php echo is_front_page() ? 'aria-current="page"' : ''; ?> href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo khaiwal_text( 'Home', 'होम' ); ?></a></li>
                         <li><a class="nav-pill <?php echo ( is_page( 'chart' ) || is_page_template( 'page-chart.php' ) || is_singular( 'khaiwal_game' ) ) ? 'is-active' : ''; ?>" <?php echo ( is_page( 'chart' ) || is_page_template( 'page-chart.php' ) ) ? 'aria-current="page"' : ( is_singular( 'khaiwal_game' ) ? 'aria-current="location"' : '' ); ?> href="<?php echo esc_url( khaiwal_chart_url() ); ?>"><?php echo khaiwal_text( 'Chart', 'चार्ट' ); ?></a></li>
                         <li><a class="nav-pill <?php echo ( is_page( 'contact' ) || is_page_template( 'page-contact.php' ) ) ? 'is-active' : ''; ?>" <?php echo ( is_page( 'contact' ) || is_page_template( 'page-contact.php' ) ) ? 'aria-current="page"' : ''; ?> href="<?php echo esc_url( khaiwal_contact_url() ); ?>"><?php echo khaiwal_text( 'Contact', 'संपर्क' ); ?></a></li>
-                        <li><a class="nav-pill" href="<?php echo esc_url( wp_login_url() ); ?>" target="_blank" rel="noopener"><?php echo khaiwal_text( 'Login', 'लॉगिन' ); ?> <?php echo khaiwal_text( '(opens in a new tab)', '(नई टैब में खुलेगा)', 'span', 'screen-reader-text' ); ?></a></li>
+
+                        <li><a class="nav-pill <?php echo khaiwal_is_info_page() ? 'is-active' : ''; ?>" <?php echo khaiwal_is_info_page() ? 'aria-current="page"' : ''; ?> href="<?php echo esc_url( khaiwal_info_url() ); ?>"><?php echo khaiwal_text( 'Info', 'जानकारी' ); ?></a></li>
                     </ul>
                 <?php endif; ?>
             </nav>
@@ -45,9 +48,12 @@
     </div>
     <div class="notice-bar">
         <div class="container notice-inner">
-            <span class="notice-label"><span class="notice-spark"><?php echo khaiwal_icon( 'spark' ); ?></span> <?php echo khaiwal_text( 'THE DAILY UPDATE', 'रोज़ाना अपडेट' ); ?></span>
-            <p><?php echo khaiwal_text( 'All your favourite game results and charts, together in one place.', 'आपके पसंदीदा गेम के रिज़ल्ट और चार्ट, एक ही जगह।' ); ?></p>
-            <a href="<?php echo esc_url( khaiwal_chart_url() ); ?>"><?php echo khaiwal_text( 'EXPLORE', 'देखें' ); ?> <?php echo khaiwal_icon( 'arrow' ); ?></a>
+            <span class="notice-label"><span class="notice-spark"><?php echo khaiwal_icon( 'spark' ); ?></span> <?php echo khaiwal_text( 'LIVE UPDATES', 'लाइव अपडेट' ); ?></span>
+            <div class="notice-marquee" data-marquee data-dashboard-url="<?php echo esc_url( rest_url( 'khaiwal/v1/dashboard' ) ); ?>" role="region" aria-label="<?php esc_attr_e( 'Latest results and updates', 'khaiwal' ); ?>" data-aria-en="Latest results and updates" data-aria-hi="ताज़ा रिज़ल्ट और अपडेट" tabindex="0">
+                <ul class="marquee-list" data-marquee-list><?php echo khaiwal_ticker_items(); // phpcs:ignore WordPress.Security.EscapeOutput -- built from escaped parts. ?></ul>
+            </div>
+            <button type="button" class="marquee-toggle" data-marquee-toggle aria-pressed="false" aria-label="<?php esc_attr_e( 'Pause scrolling updates', 'khaiwal' ); ?>" data-label-pause="<?php esc_attr_e( 'Pause scrolling updates', 'khaiwal' ); ?>" data-label-play="<?php esc_attr_e( 'Resume scrolling updates', 'khaiwal' ); ?>" hidden><?php echo khaiwal_icon( 'pause', 'icon-pause' ); ?><?php echo khaiwal_icon( 'play', 'icon-play' ); ?></button>
+            <a class="notice-explore" href="<?php echo esc_url( khaiwal_chart_url() ); ?>"><?php echo khaiwal_text( 'EXPLORE', 'देखें' ); ?> <?php echo khaiwal_icon( 'arrow' ); ?></a>
         </div>
     </div>
 </header>

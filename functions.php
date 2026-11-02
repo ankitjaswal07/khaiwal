@@ -2,10 +2,16 @@
 /** Khaiwal theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'KHAIWAL_VERSION', '1.1.0' );
+define( 'KHAIWAL_VERSION', '1.3.0' );
 require_once get_template_directory() . '/inc/catalog.php';
 require_once get_template_directory() . '/inc/dashboard.php';
 require_once get_template_directory() . '/inc/admin.php';
+require_once get_template_directory() . '/inc/publish.php';
+require_once get_template_directory() . '/inc/seo.php';
+require_once get_template_directory() . '/inc/agent.php';
+require_once get_template_directory() . '/inc/ui.php';
+require_once get_template_directory() . '/inc/contacts.php';
+require_once get_template_directory() . '/inc/content.php';
 
 function khaiwal_setup() {
     load_theme_textdomain( 'khaiwal', get_template_directory() . '/languages' );
@@ -61,6 +67,11 @@ function khaiwal_icon( $name, $class = '' ) {
         'globe' => '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
         'info' => '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
         'shield' => '<path d="M12 3 4 6v5c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/>',
+        'user' => '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+        'publish' => '<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+        'whatsapp' => '<path d="M20 11.5a8 8 0 0 1-11.9 7L4 20l1.5-4A8 8 0 1 1 20 11.5Z"/><path d="M9 8.5c.3 3 2.5 5.2 5.5 6l1.2-1.3-1.9-1-.8.7c-.9-.4-1.6-1.1-2-2l.7-.8-1-1.9Z"/>',
+        'pause' => '<path d="M9 6v12M15 6v12"/>',
+        'play' => '<path d="m8 5 11 7-11 7Z"/>',
         'book' => '<path d="M4 5.5c3-1 5.5-.5 8 1.5 2.5-2 5-2.5 8-1.5v13c-3-1-5.5-.5-8 1.5-2.5-2-5-2.5-8-1.5zM12 7v13"/>',
     );
     if ( ! isset( $paths[ $name ] ) ) { return ''; }
@@ -88,3 +99,16 @@ function khaiwal_page_url( $slug, $template ) {
 }
 function khaiwal_chart_url() { return khaiwal_page_url( 'chart', 'page-chart.php' ); }
 function khaiwal_contact_url() { return khaiwal_page_url( 'contact', 'page-contact.php' ); }
+
+function khaiwal_info_url() { return khaiwal_page_url( 'info', 'page-info.php' ); }
+
+/** A result number, or the bouncing WAIT word when today's result is not announced yet. */
+function khaiwal_wait_html() {
+    $letters = '';
+    foreach ( array( 'W', 'A', 'I', 'T' ) as $i => $letter ) { $letters .= '<span aria-hidden="true" style="--i:' . (int) $i . '">' . $letter . '</span>'; }
+    return '<span class="wait-word" role="img" aria-label="' . esc_attr__( 'Wait: result not announced yet', 'khaiwal' ) . '">' . $letters . '</span>';
+}
+function khaiwal_result_html( $value, $waiting = true, $empty = '—' ) {
+    if ( '' !== (string) $value ) { return esc_html( $value ); }
+    return $waiting ? khaiwal_wait_html() : esc_html( $empty ); // phpcs:ignore WordPress.Security.EscapeOutput -- fixed trusted markup.
+}
