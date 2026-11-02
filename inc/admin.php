@@ -12,7 +12,7 @@ function khaiwal_game_meta_box( $post ) {
     wp_nonce_field( 'khaiwal_game_details', 'khaiwal_game_nonce' );
     $time = get_post_meta( $post->ID, '_khaiwal_time', true );
     $hi = get_post_meta( $post->ID, '_khaiwal_hindi', true );
-    echo '<p><label for="khaiwal_time">' . esc_html__( 'Usual result time (IST)', 'khaiwal' ) . '</label><br><input class="widefat" id="khaiwal_time" name="khaiwal_time" value="' . esc_attr( $time ) . '" placeholder="3:15 PM"></p>';
+    echo '<p><label for="khaiwal_time">' . esc_html__( 'Usual result time (IST)', 'khaiwal' ) . '</label><br><input class="widefat" id="khaiwal_time" name="khaiwal_time" value="' . esc_attr( $time ) . '" placeholder="2:50 PM"><br><small>' . esc_html__( 'Use h:mm AM/PM in IST for the current and next game schedule.', 'khaiwal' ) . '</small></p>';
     echo '<p><label for="khaiwal_hindi">' . esc_html__( 'Hindi game name', 'khaiwal' ) . '</label><br><input class="widefat" id="khaiwal_hindi" name="khaiwal_hindi" value="' . esc_attr( $hi ) . '"></p>';
 }
 
@@ -73,7 +73,7 @@ function khaiwal_import_screen() {
         printf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( sprintf( __( 'Imported or updated %1$d rows. Skipped %2$d rows (invalid or not editable).', 'khaiwal' ), absint( $_GET['imported'] ), isset( $_GET['skipped'] ) ? absint( $_GET['skipped'] ) : 0 ) ) );
     }
     echo '<p>' . esc_html__( 'Upload a CSV with the headers game_slug,date,result. Dates must be YYYY-MM-DD and results must be two digits. Existing published entries for the same game and date are updated.', 'khaiwal' ) . '</p>';
-    echo '<p><code>game_slug,date,result<br>delhi-bazar,2026-11-01,30<br>madhupuri,2026-11-01,09</code></p>';
+    echo '<p><code>game_slug,date,result<br>delhi-bazar,2026-11-01,30<br>faridabad,2026-11-01,77</code></p>';
     echo '<p>' . esc_html__( 'Game slugs are the last part of each game URL. The file is processed locally and is not retained.', 'khaiwal' ) . '</p>';
     echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
     wp_nonce_field( 'khaiwal_import' );

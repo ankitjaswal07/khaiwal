@@ -3,10 +3,19 @@
   "snapshot_date": "2026-11-02",
   "games": [
     {
+      "slug": "model-town",
+      "popular": false,
+      "results": {},
+      "source_url": "",
+      "name": "Model Town",
+      "hindi": "मॉडल टाऊन",
+      "time": "12:40 PM"
+    },
+    {
       "slug": "sadar-bazar",
       "name": "Sadar Bazar",
       "hindi": "सदर बाजार",
-      "time": "1:40 PM",
+      "time": "1:25 PM",
       "popular": true,
       "results": {
         "2026-10": [
@@ -44,15 +53,19 @@
         ],
         "2026-11": [
           "45",
-          "-"
+          "89"
         ]
-      }
+      },
+      "legacy_default_time": "1:40 PM",
+      "legacy_default_hindi": "सदर बाजार",
+      "legacy_default_name": "Sadar Bazar",
+      "source_url": "https://a1-satta.com/sadar-bazar"
     },
     {
       "slug": "gwalior",
       "name": "Gwalior",
       "hindi": "ग्वालियर",
-      "time": "2:40 PM",
+      "time": "2:25 PM",
       "popular": true,
       "results": {
         "2026-10": [
@@ -90,15 +103,19 @@
         ],
         "2026-11": [
           "17",
-          "-"
+          "29"
         ]
-      }
+      },
+      "legacy_default_time": "2:40 PM",
+      "legacy_default_hindi": "ग्वालियर",
+      "legacy_default_name": "Gwalior",
+      "source_url": "https://a1-satta.com/gwalior"
     },
     {
       "slug": "delhi-bazar",
       "name": "Delhi Bazar",
       "hindi": "दिल्ली बाजार",
-      "time": "3:15 PM",
+      "time": "2:50 PM",
       "popular": true,
       "results": {
         "2026-10": [
@@ -136,10 +153,393 @@
         ],
         "2026-11": [
           "30",
+          "47"
+        ]
+      },
+      "legacy_default_time": "3:15 PM",
+      "legacy_default_hindi": "दिल्ली बाजार",
+      "legacy_default_name": "Delhi Bazar",
+      "source_url": "https://a1-satta.com/delhi-bazar"
+    },
+    {
+      "slug": "punjab-matka",
+      "popular": false,
+      "results": {},
+      "source_url": "",
+      "name": "Punjab Matka",
+      "hindi": "पंजाब मटका",
+      "time": "3:40 PM"
+    },
+    {
+      "slug": "shri-ganesh",
+      "name": "Shri Ganesh",
+      "hindi": "श्री गणेश",
+      "time": "4:25 PM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "51",
+          "31",
+          "54",
+          "47",
+          "18",
+          "27",
+          "89",
+          "02",
+          "01",
+          "06",
+          "58",
+          "67",
+          "98",
+          "80",
+          "56",
+          "62",
+          "55",
+          "19",
+          "11",
+          "95",
+          "64",
+          "99",
+          "04",
+          "66",
+          "81",
+          "84",
+          "06",
+          "69",
+          "91",
+          "50",
+          "-"
+        ],
+        "2026-11": [
+          "62",
           "-"
         ]
-      }
+      },
+      "legacy_default_time": "4:40 PM",
+      "legacy_default_hindi": "श्री गणेश",
+      "legacy_default_name": "Shri Ganesh",
+      "source_url": "https://a1-satta.com/shri-ganesh"
     },
+    {
+      "slug": "agra",
+      "name": "Agra",
+      "hindi": "आगरा",
+      "time": "5:20 PM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "60",
+          "89",
+          "35",
+          "64",
+          "18",
+          "05",
+          "91",
+          "47",
+          "17",
+          "37",
+          "32",
+          "29",
+          "59",
+          "53",
+          "38",
+          "53",
+          "05",
+          "04",
+          "34",
+          "97",
+          "40",
+          "21",
+          "41",
+          "73",
+          "03",
+          "26",
+          "88",
+          "97",
+          "05",
+          "94",
+          "-"
+        ],
+        "2026-11": [
+          "94",
+          "-"
+        ]
+      },
+      "legacy_default_time": "5:30 PM",
+      "legacy_default_hindi": "आगरा",
+      "legacy_default_name": "Agra",
+      "source_url": "https://a1-satta.com/agra"
+    },
+    {
+      "slug": "faridabad",
+      "name": "Faridabad",
+      "hindi": "फरीदाबाद",
+      "time": "5:55 PM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "42",
+          "05",
+          "58",
+          "36",
+          "26",
+          "01",
+          "87",
+          "92",
+          "99",
+          "08",
+          "96",
+          "55",
+          "87",
+          "11",
+          "48",
+          "29",
+          "78",
+          "78",
+          "72",
+          "29",
+          "12",
+          "26",
+          "61",
+          "21",
+          "52",
+          "09",
+          "17",
+          "99",
+          "96",
+          "74",
+          "-"
+        ],
+        "2026-11": [
+          "77",
+          "-"
+        ]
+      },
+      "legacy_default_time": "6:10 PM",
+      "legacy_default_hindi": "फरीदाबाद",
+      "legacy_default_name": "Faridabad",
+      "source_url": "https://a1-satta.com/faridabad"
+    },
+    {
+      "slug": "alwar",
+      "name": "Alwar",
+      "hindi": "अलवर",
+      "time": "7:25 PM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "72",
+          "07",
+          "70",
+          "16",
+          "38",
+          "25",
+          "89",
+          "77",
+          "14",
+          "68",
+          "31",
+          "17",
+          "21",
+          "48",
+          "64",
+          "31",
+          "47",
+          "19",
+          "71",
+          "11",
+          "29",
+          "71",
+          "20",
+          "65",
+          "36",
+          "60",
+          "28",
+          "60",
+          "34",
+          "90",
+          "-"
+        ],
+        "2026-11": [
+          "32",
+          "-"
+        ]
+      },
+      "legacy_default_time": "7:35 PM",
+      "legacy_default_hindi": "अलवर",
+      "legacy_default_name": "Alwar",
+      "source_url": "https://a1-satta.com/alwar"
+    },
+    {
+      "slug": "hr-matka",
+      "popular": false,
+      "results": {},
+      "source_url": "",
+      "name": "HR Matka",
+      "hindi": "HR मटका",
+      "time": "8:15 PM"
+    },
+    {
+      "slug": "gaziabad",
+      "name": "Ghaziabad",
+      "hindi": "गाज़ियाबाद",
+      "time": "9:20 PM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "67",
+          "81",
+          "95",
+          "98",
+          "78",
+          "38",
+          "84",
+          "74",
+          "89",
+          "71",
+          "46",
+          "48",
+          "58",
+          "80",
+          "74",
+          "42",
+          "15",
+          "16",
+          "23",
+          "16",
+          "86",
+          "55",
+          "35",
+          "77",
+          "09",
+          "34",
+          "26",
+          "87",
+          "30",
+          "71",
+          "-"
+        ],
+        "2026-11": [
+          "63",
+          "-"
+        ]
+      },
+      "legacy_default_time": "9:50 PM",
+      "legacy_default_hindi": "गाज़ियाबाद",
+      "legacy_default_name": "Ghaziabad",
+      "source_url": "https://a1-satta.com/gaziabad"
+    },
+    {
+      "slug": "huda-city",
+      "popular": false,
+      "results": {},
+      "source_url": "",
+      "name": "HUDA City",
+      "hindi": "हुडा सिटी",
+      "time": "10:40 PM"
+    },
+    {
+      "slug": "gali",
+      "name": "Gali",
+      "hindi": "गली",
+      "time": "11:25 PM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "93",
+          "01",
+          "68",
+          "80",
+          "24",
+          "53",
+          "29",
+          "62",
+          "83",
+          "12",
+          "40",
+          "90",
+          "22",
+          "81",
+          "12",
+          "51",
+          "69",
+          "73",
+          "47",
+          "96",
+          "09",
+          "85",
+          "60",
+          "33",
+          "12",
+          "43",
+          "40",
+          "32",
+          "72",
+          "52",
+          "-"
+        ],
+        "2026-11": [
+          "82",
+          "-"
+        ]
+      },
+      "legacy_default_time": "11:50 PM",
+      "legacy_default_hindi": "गली",
+      "legacy_default_name": "Gali",
+      "source_url": "https://a1-satta.com/gali"
+    },
+    {
+      "slug": "disawer",
+      "name": "Disawar",
+      "hindi": "दिसावर",
+      "time": "1:00 AM",
+      "popular": true,
+      "results": {
+        "2026-10": [
+          "-",
+          "52",
+          "18",
+          "15",
+          "70",
+          "59",
+          "23",
+          "90",
+          "26",
+          "22",
+          "27",
+          "98",
+          "40",
+          "97",
+          "42",
+          "98",
+          "97",
+          "44",
+          "23",
+          "64",
+          "72",
+          "47",
+          "03",
+          "02",
+          "61",
+          "08",
+          "34",
+          "50",
+          "01",
+          "78",
+          "26"
+        ],
+        "2026-11": [
+          "-",
+          "64"
+        ]
+      },
+      "legacy_default_time": "5:15 AM",
+      "legacy_default_hindi": "दिसावर",
+      "legacy_default_name": "Disawer",
+      "source_url": "https://a1-satta.com/disawer"
+    }
+  ],
+  "legacy_games": [
     {
       "slug": "delhi-matka",
       "name": "Delhi Matka",
@@ -184,237 +584,8 @@
           "59",
           "-"
         ]
-      }
-    },
-    {
-      "slug": "shri-ganesh",
-      "name": "Shri Ganesh",
-      "hindi": "श्री गणेश",
-      "time": "4:40 PM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "51",
-          "31",
-          "54",
-          "47",
-          "18",
-          "27",
-          "89",
-          "02",
-          "01",
-          "06",
-          "58",
-          "67",
-          "98",
-          "80",
-          "56",
-          "62",
-          "55",
-          "19",
-          "11",
-          "95",
-          "64",
-          "99",
-          "04",
-          "66",
-          "81",
-          "84",
-          "06",
-          "69",
-          "91",
-          "50",
-          "-"
-        ],
-        "2026-11": [
-          "62",
-          "-"
-        ]
-      }
-    },
-    {
-      "slug": "agra",
-      "name": "Agra",
-      "hindi": "आगरा",
-      "time": "5:30 PM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "60",
-          "89",
-          "35",
-          "64",
-          "18",
-          "05",
-          "91",
-          "47",
-          "17",
-          "37",
-          "32",
-          "29",
-          "59",
-          "53",
-          "38",
-          "53",
-          "05",
-          "04",
-          "34",
-          "97",
-          "40",
-          "21",
-          "41",
-          "73",
-          "03",
-          "26",
-          "88",
-          "97",
-          "05",
-          "94",
-          "-"
-        ],
-        "2026-11": [
-          "94",
-          "-"
-        ]
-      }
-    },
-    {
-      "slug": "faridabad",
-      "name": "Faridabad",
-      "hindi": "फरीदाबाद",
-      "time": "6:10 PM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "42",
-          "05",
-          "58",
-          "36",
-          "26",
-          "01",
-          "87",
-          "92",
-          "99",
-          "08",
-          "96",
-          "55",
-          "87",
-          "11",
-          "48",
-          "29",
-          "78",
-          "78",
-          "72",
-          "29",
-          "12",
-          "26",
-          "61",
-          "21",
-          "52",
-          "09",
-          "17",
-          "99",
-          "96",
-          "74",
-          "-"
-        ],
-        "2026-11": [
-          "77",
-          "-"
-        ]
-      }
-    },
-    {
-      "slug": "alwar",
-      "name": "Alwar",
-      "hindi": "अलवर",
-      "time": "7:35 PM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "72",
-          "07",
-          "70",
-          "16",
-          "38",
-          "25",
-          "89",
-          "77",
-          "14",
-          "68",
-          "31",
-          "17",
-          "21",
-          "48",
-          "64",
-          "31",
-          "47",
-          "19",
-          "71",
-          "11",
-          "29",
-          "71",
-          "20",
-          "65",
-          "36",
-          "60",
-          "28",
-          "60",
-          "34",
-          "90",
-          "-"
-        ],
-        "2026-11": [
-          "32",
-          "-"
-        ]
-      }
-    },
-    {
-      "slug": "gaziabad",
-      "name": "Ghaziabad",
-      "hindi": "गाज़ियाबाद",
-      "time": "9:50 PM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "67",
-          "81",
-          "95",
-          "98",
-          "78",
-          "38",
-          "84",
-          "74",
-          "89",
-          "71",
-          "46",
-          "48",
-          "58",
-          "80",
-          "74",
-          "42",
-          "15",
-          "16",
-          "23",
-          "16",
-          "86",
-          "55",
-          "35",
-          "77",
-          "09",
-          "34",
-          "26",
-          "87",
-          "30",
-          "71",
-          "-"
-        ],
-        "2026-11": [
-          "63",
-          "-"
-        ]
-      }
+      },
+      "source_url": "https://a1-satta.com/delhi-matka"
     },
     {
       "slug": "dwarka",
@@ -460,99 +631,8 @@
           "17",
           "-"
         ]
-      }
-    },
-    {
-      "slug": "gali",
-      "name": "Gali",
-      "hindi": "गली",
-      "time": "11:50 PM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "93",
-          "01",
-          "68",
-          "80",
-          "24",
-          "53",
-          "29",
-          "62",
-          "83",
-          "12",
-          "40",
-          "90",
-          "22",
-          "81",
-          "12",
-          "51",
-          "69",
-          "73",
-          "47",
-          "96",
-          "09",
-          "85",
-          "60",
-          "33",
-          "12",
-          "43",
-          "40",
-          "32",
-          "72",
-          "52",
-          "-"
-        ],
-        "2026-11": [
-          "82",
-          "-"
-        ]
-      }
-    },
-    {
-      "slug": "disawer",
-      "name": "Disawer",
-      "hindi": "दिसावर",
-      "time": "5:15 AM",
-      "popular": true,
-      "results": {
-        "2026-10": [
-          "-",
-          "52",
-          "18",
-          "15",
-          "70",
-          "59",
-          "23",
-          "90",
-          "26",
-          "22",
-          "27",
-          "98",
-          "40",
-          "97",
-          "42",
-          "98",
-          "97",
-          "44",
-          "23",
-          "64",
-          "72",
-          "47",
-          "03",
-          "02",
-          "61",
-          "08",
-          "34",
-          "50",
-          "01",
-          "78",
-          "26"
-        ],
-        "2026-11": [
-          "-",
-          "64"
-        ]
-      }
+      },
+      "source_url": "https://a1-satta.com/dwarka"
     },
     {
       "slug": "hr-satta",
@@ -598,7 +678,8 @@
           "47",
           "90"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/hr-satta"
     },
     {
       "slug": "kkr-city",
@@ -644,7 +725,8 @@
           "53",
           "89"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/kkr-city"
     },
     {
       "slug": "ujjala-super",
@@ -690,7 +772,8 @@
           "50",
           "65"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/ujjala-super"
     },
     {
       "slug": "madhupuri",
@@ -736,7 +819,8 @@
           "09",
           "28"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/madhupuri"
     },
     {
       "slug": "sarafa-bazar",
@@ -782,7 +866,8 @@
           "80",
           "65"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/sarafa-bazar"
     },
     {
       "slug": "bombay-savera",
@@ -828,7 +913,8 @@
           "26",
           "19"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/bombay-savera"
     },
     {
       "slug": "metro-city",
@@ -874,7 +960,8 @@
           "92",
           "78"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/metro-city"
     },
     {
       "slug": "karol-bagh",
@@ -920,7 +1007,8 @@
           "20",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/karol-bagh"
     },
     {
       "slug": "anmol-bazar",
@@ -966,7 +1054,8 @@
           "09",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/anmol-bazar"
     },
     {
       "slug": "shree-ganga",
@@ -1012,7 +1101,8 @@
           "16",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/shree-ganga"
     },
     {
       "slug": "delhi-darbar",
@@ -1058,7 +1148,8 @@
           "63",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/delhi-darbar"
     },
     {
       "slug": "lucknow-capital",
@@ -1104,7 +1195,8 @@
           "68",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/lucknow-capital"
     },
     {
       "slug": "new-ganga",
@@ -1150,7 +1242,8 @@
           "69",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/new-ganga"
     },
     {
       "slug": "shri-lakshmi",
@@ -1196,7 +1289,8 @@
           "60",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/shri-lakshmi"
     },
     {
       "slug": "raj-shree",
@@ -1242,7 +1336,8 @@
           "17",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/raj-shree"
     },
     {
       "slug": "vip-agra",
@@ -1288,7 +1383,8 @@
           "59",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/vip-agra"
     },
     {
       "slug": "men-bazar",
@@ -1334,7 +1430,8 @@
           "60",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/men-bazar"
     },
     {
       "slug": "mandi-bazar",
@@ -1380,7 +1477,8 @@
           "07",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/mandi-bazar"
     },
     {
       "slug": "bhadra-bazar",
@@ -1426,7 +1524,8 @@
           "01",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/bhadra-bazar"
     },
     {
       "slug": "lion-bazar",
@@ -1472,7 +1571,8 @@
           "26",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/lion-bazar"
     },
     {
       "slug": "mohali-7",
@@ -1518,7 +1618,8 @@
           "94",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/mohali-7"
     },
     {
       "slug": "jabalpur",
@@ -1564,7 +1665,8 @@
           "07",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/jabalpur"
     },
     {
       "slug": "dehradun-city",
@@ -1610,7 +1712,8 @@
           "56",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/dehradun-city"
     },
     {
       "slug": "daman",
@@ -1656,7 +1759,8 @@
           "94",
           "-"
         ]
-      }
+      },
+      "source_url": "https://a1-satta.com/daman"
     }
   ]
 }

@@ -8,7 +8,7 @@ $previous_value = khaiwal_result_on( $game, $previous );
 $words = preg_split( '/\s+/', $game['name'] );
 $initials = strtoupper( substr( $words[0], 0, 1 ) . ( isset( $words[1] ) ? substr( $words[1], 0, 1 ) : substr( $words[0], 1, 1 ) ) );
 ?>
-<article class="game-card" data-game-card data-name="<?php echo esc_attr( strtolower( $game['name'] ) . ' ' . $game['hindi'] ); ?>" data-popular="<?php echo ! empty( $game['popular'] ) ? 'yes' : 'no'; ?>" data-status="<?php echo $current_value !== '' ? 'declared' : 'awaiting'; ?>">
+<article class="game-card" data-game-card data-game-slug="<?php echo esc_attr( $game['slug'] ); ?>" data-name="<?php echo esc_attr( strtolower( $game['name'] ) . ' ' . $game['hindi'] ); ?>" data-popular="<?php echo ! empty( $game['popular'] ) ? 'yes' : 'no'; ?>" data-status="<?php echo $current_value !== '' ? 'declared' : 'awaiting'; ?>">
     <div class="game-card-top">
         <span class="game-monogram" aria-hidden="true"><?php echo esc_html( $initials ); ?></span>
         <div class="game-title"><h3><?php echo khaiwal_text( $game['name'], $game['hindi'] ); ?></h3><p><?php echo khaiwal_icon( 'clock' ); ?> <?php echo esc_html( $game['time'] ? $game['time'] . ' IST' : '—' ); ?></p></div>

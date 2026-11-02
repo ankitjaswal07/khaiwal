@@ -2,8 +2,9 @@
 /** Khaiwal theme bootstrap. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'KHAIWAL_VERSION', '1.0.0' );
+define( 'KHAIWAL_VERSION', '1.1.0' );
 require_once get_template_directory() . '/inc/catalog.php';
+require_once get_template_directory() . '/inc/dashboard.php';
 require_once get_template_directory() . '/inc/admin.php';
 
 function khaiwal_setup() {

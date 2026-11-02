@@ -12,6 +12,14 @@ function khaiwal_catalog() {
     return $catalog;
 }
 
+/** Keep historical data available for old URLs without adding them to the active lineup. */
+function khaiwal_catalog_game( $slug ) {
+    $catalog = khaiwal_catalog();
+    $all = array_merge( $catalog['games'], isset( $catalog['legacy_games'] ) ? $catalog['legacy_games'] : array() );
+    foreach ( $all as $game ) { if ( $game['slug'] === $slug ) { return $game; } }
+    return null;
+}
+
 function khaiwal_register_types() {
     register_post_type( 'khaiwal_game', array(
         'labels' => array( 'name' => __( 'Games', 'khaiwal' ), 'singular_name' => __( 'Game', 'khaiwal' ), 'add_new_item' => __( 'Add game', 'khaiwal' ) ),
@@ -68,18 +76,51 @@ function khaiwal_install_catalog() {
 }
 add_action( 'after_switch_theme', 'khaiwal_install_catalog' );
 
-/** Combine seeded games with any games created by editors. */
+/** One-time, non-destructive upgrade for the selected 14-game lineup. */
+function khaiwal_upgrade_lineup() {
+    if ( get_option( 'khaiwal_lineup_version' ) === '2' ) { return; }
+    $locked_at = (int) get_option( 'khaiwal_lineup_upgrade_lock', 0 );
+    if ( $locked_at && time() - $locked_at > 300 ) { delete_option( 'khaiwal_lineup_upgrade_lock' ); }
+    if ( ! add_option( 'khaiwal_lineup_upgrade_lock', time(), '', false ) ) { return; }
+    $success = true;
+    try {
+        foreach ( khaiwal_catalog()['games'] as $game ) {
+            $post = get_page_by_path( $game['slug'], OBJECT, 'khaiwal_game' );
+            if ( ! $post ) {
+                $id = wp_insert_post( array( 'post_type' => 'khaiwal_game', 'post_status' => 'publish', 'post_title' => $game['name'], 'post_name' => $game['slug'] ), true );
+                if ( is_wp_error( $id ) ) { $success = false; continue; }
+                update_post_meta( $id, '_khaiwal_hindi', $game['hindi'] );
+                update_post_meta( $id, '_khaiwal_time', $game['time'] );
+                continue;
+            }
+            // Update only the previous theme defaults; never overwrite editor customisations.
+            $time = get_post_meta( $post->ID, '_khaiwal_time', true );
+            $hi = get_post_meta( $post->ID, '_khaiwal_hindi', true );
+            if ( '' === $time || ( isset( $game['legacy_default_time'] ) && $time === $game['legacy_default_time'] ) ) { update_post_meta( $post->ID, '_khaiwal_time', $game['time'] ); }
+            if ( '' === $hi || ( isset( $game['legacy_default_hindi'] ) && $hi === $game['legacy_default_hindi'] ) ) { update_post_meta( $post->ID, '_khaiwal_hindi', $game['hindi'] ); }
+            if ( isset( $game['legacy_default_name'] ) && $post->post_title === $game['legacy_default_name'] && $post->post_title !== $game['name'] ) {
+                $updated = wp_update_post( array( 'ID' => $post->ID, 'post_title' => $game['name'] ), true );
+                if ( is_wp_error( $updated ) ) { $success = false; }
+            }
+        }
+        if ( $success ) { update_option( 'khaiwal_lineup_version', '2', false ); }
+    } finally {
+        delete_option( 'khaiwal_lineup_upgrade_lock' );
+    }
+}
+add_action( 'init', 'khaiwal_upgrade_lineup', 20 );
+
+/** The curated lineup uses published WordPress game posts as its source of truth. */
 function khaiwal_games() {
     static $games = null;
     if ( null !== $games ) { return $games; }
     $games = array();
     foreach ( khaiwal_catalog()['games'] as $game ) { $games[ $game['slug'] ] = $game; }
-    $posts = get_posts( array( 'post_type' => 'khaiwal_game', 'post_status' => 'publish', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC', 'no_found_rows' => true ) );
+    $posts = get_posts( array( 'post_type' => 'khaiwal_game', 'post_status' => 'publish', 'posts_per_page' => -1, 'post_name__in' => array_keys( $games ), 'orderby' => 'title', 'order' => 'ASC', 'no_found_rows' => true ) );
     foreach ( $posts as $post ) {
         $slug = $post->post_name;
-        if ( ! isset( $games[ $slug ] ) ) {
-            $games[ $slug ] = array( 'slug' => $slug, 'name' => $post->post_title, 'hindi' => $post->post_title, 'time' => '', 'popular' => false, 'results' => array() );
-        }
+        // Keep other existing game posts and their URLs intact, but out of the selected lineup.
+        if ( ! isset( $games[ $slug ] ) ) { continue; }
         $games[ $slug ]['name'] = $post->post_title;
         $hi = get_post_meta( $post->ID, '_khaiwal_hindi', true );
         $time = get_post_meta( $post->ID, '_khaiwal_time', true );
@@ -91,6 +132,22 @@ function khaiwal_games() {
     foreach ( $games as $slug => $game ) { if ( empty( $game['post_id'] ) ) { unset( $games[ $slug ] ); } }
     return $games;
 }
+
+/** Keep previous game URLs working without listing them in the active lineup or core sitemap. */
+function khaiwal_sitemap_game_args( $args, $post_type ) {
+    if ( $post_type === 'khaiwal_game' ) { $args['post_name__in'] = array_column( khaiwal_catalog()['games'], 'slug' ); }
+    return $args;
+}
+add_filter( 'wp_sitemaps_posts_query_args', 'khaiwal_sitemap_game_args', 10, 2 );
+
+function khaiwal_legacy_game_robots( $robots ) {
+    if ( is_singular( 'khaiwal_game' ) ) {
+        $slug = get_post_field( 'post_name', get_queried_object_id() );
+        if ( ! in_array( $slug, array_column( khaiwal_catalog()['games'], 'slug' ), true ) ) { $robots['noindex'] = true; }
+    }
+    return $robots;
+}
+add_filter( 'wp_robots', 'khaiwal_legacy_game_robots' );
 
 function khaiwal_game_url( $game ) {
     return ! empty( $game['post_id'] ) ? get_permalink( $game['post_id'] ) : home_url( '/games/' . $game['slug'] . '/' );
