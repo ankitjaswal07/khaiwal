@@ -1,0 +1,41 @@
+/* Publish results screen (wp-admin only). */
+.khaiwal-publish .khaiwal-intro{max-width:760px;font-size:14px;margin:8px 0 14px}
+.khaiwal-publish .khaiwal-tabs{margin-bottom:14px}
+.khaiwal-datebar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 14px}
+.khaiwal-date-title{font-size:16px;margin:0 8px}
+.khaiwal-datepick{margin-left:auto;display:flex;gap:6px;align-items:center}
+.khaiwal-actionbar{position:sticky;top:32px;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:10px 14px;margin:0 0 12px;background:#fff;border:1px solid #dcdcde;border-left:4px solid #ffd800;box-shadow:0 1px 1px rgba(0,0,0,.04)}
+.khaiwal-actionbar-bottom{position:static;margin:12px 0 8px}
+.khaiwal-actionbar .button-hero{margin:0}
+.khaiwal-count{font-weight:600}
+.khaiwal-count.has-entries{color:#1d6b2f}
+.khaiwal-hint{color:#646970;font-size:12px}
+.khaiwal-table{max-width:1100px}
+.khaiwal-table th,.khaiwal-table td{vertical-align:middle}
+.khaiwal-day-table .column-num{width:36px;text-align:center;color:#8c8f94}
+.khaiwal-game-cell label{display:block;cursor:pointer}
+.khaiwal-game-cell strong{display:block;font-size:14px}
+.khaiwal-hindi{display:block;color:#646970;font-weight:400;font-size:12px}
+.khaiwal-day-table .column-result{width:120px}
+.khaiwal-result-input{width:72px;height:44px;text-align:center;font:600 22px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;padding:0 4px}
+.khaiwal-result-input::placeholder{color:#a7aaad;font-weight:400}
+.khaiwal-result-input.is-changed{border-color:#2271b1;background:#f0f6fc;box-shadow:0 0 0 1px #2271b1}
+.khaiwal-result-input.is-invalid{border-color:#d63638;background:#fcf0f1;box-shadow:0 0 0 1px #d63638}
+.khaiwal-prev{font-size:14px}
+.khaiwal-badge{display:inline-block;padding:2px 9px;border-radius:999px;background:#f0f0f1;color:#50575e;font-size:12px;font-weight:600;white-space:nowrap}
+.khaiwal-badge.is-published{background:#d7f2de;color:#14532d}
+.khaiwal-badge.is-snapshot{background:#e8eaed;color:#3c434a}
+.khaiwal-badge.is-due{background:#fff1c2;color:#6b4e00}
+.khaiwal-badge.is-today{background:#ffd800;color:#1d1d1b;margin-left:6px}
+.khaiwal-day-table tr.is-due{box-shadow:inset 3px 0 0 #dba617}
+.khaiwal-grid-scroll{overflow:auto;max-height:70vh;max-width:100%;border:1px solid #dcdcde;background:#fff}
+.khaiwal-month-table{max-width:none;width:auto;border:0}
+.khaiwal-month-table thead th{position:sticky;top:0;z-index:3;background:#f6f7f7;text-align:center;font-size:12px;white-space:nowrap}
+.khaiwal-month-table thead th small{display:block;font-weight:400;color:#646970}
+.khaiwal-month-table td{text-align:center;padding:4px}
+.khaiwal-month-table .khaiwal-result-input{width:54px;height:34px;font-size:16px}
+.khaiwal-month-table .khaiwal-sticky{position:sticky;left:0;z-index:2;background:#f6f7f7;white-space:nowrap}
+.khaiwal-month-table thead .khaiwal-sticky{z-index:4}
+.khaiwal-month-table td.is-published{background:#e9f7ed}
+.khaiwal-month-table tr.is-today th,.khaiwal-month-table tr.is-today td{box-shadow:inset 0 2px 0 #ffd800,inset 0 -2px 0 #ffd800}
+@media(max-width:782px){.khaiwal-actionbar{top:46px}.khaiwal-datepick{margin-left:0}.khaiwal-day-table .column-num,.khaiwal-day-table th:nth-child(4),.khaiwal-day-table td:nth-child(4){display:none}.khaiwal-result-input{font-size:20px}}

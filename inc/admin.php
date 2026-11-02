@@ -21,7 +21,7 @@ function khaiwal_result_meta_box( $post ) {
     $selected = get_post_meta( $post->ID, '_khaiwal_game', true );
     $date = get_post_meta( $post->ID, '_khaiwal_date', true );
     $number = get_post_meta( $post->ID, '_khaiwal_number', true );
-    echo '<p>' . esc_html__( 'Publish this post to display the result. A published result overrides the archived snapshot for the same game and date.', 'khaiwal' ) . '</p>';
+    echo '<p>' . esc_html__( 'No title is needed: it is created from the game and date. Publish to display the result; it overrides the archived snapshot for the same game and date.', 'khaiwal' ) . ' <a href="' . esc_url( admin_url( 'admin.php?page=khaiwal-publish' ) ) . '">' . esc_html__( 'Enter many results at once', 'khaiwal' ) . '</a></p>';
     echo '<p><label for="khaiwal_game"><strong>' . esc_html__( 'Game', 'khaiwal' ) . '</strong></label><br><select id="khaiwal_game" name="khaiwal_game" required><option value="">' . esc_html__( 'Select a game', 'khaiwal' ) . '</option>';
     foreach ( khaiwal_games() as $game ) { echo '<option value="' . esc_attr( $game['slug'] ) . '" ' . selected( $selected, $game['slug'], false ) . '>' . esc_html( $game['name'] ) . '</option>'; }
     echo '</select></p>';
@@ -49,6 +49,7 @@ function khaiwal_save_result( $id ) {
     update_post_meta( $id, '_khaiwal_game', $slug );
     update_post_meta( $id, '_khaiwal_date', $date );
     update_post_meta( $id, '_khaiwal_number', $number );
+    khaiwal_sync_result_title( $id );
 }
 add_action( 'save_post_khaiwal_result', 'khaiwal_save_result' );
 
@@ -62,12 +63,12 @@ function khaiwal_result_error_notice() {
 add_action( 'admin_notices', 'khaiwal_result_error_notice' );
 
 function khaiwal_import_menu() {
-    add_submenu_page( 'edit.php?post_type=khaiwal_result', __( 'Import results', 'khaiwal' ), __( 'Import CSV', 'khaiwal' ), 'publish_posts', 'khaiwal-import', 'khaiwal_import_screen' );
+    add_submenu_page( 'khaiwal-publish', __( 'Import results', 'khaiwal' ), __( 'Import CSV', 'khaiwal' ), khaiwal_publish_capability(), 'khaiwal-import', 'khaiwal_import_screen' );
 }
 add_action( 'admin_menu', 'khaiwal_import_menu' );
 
 function khaiwal_import_screen() {
-    if ( ! current_user_can( 'publish_posts' ) ) { return; }
+    if ( ! current_user_can( khaiwal_publish_capability() ) ) { return; }
     echo '<div class="wrap"><h1>' . esc_html__( 'Import game results', 'khaiwal' ) . '</h1>';
     if ( isset( $_GET['imported'] ) ) {
         printf( '<div class="notice notice-success"><p>%s</p></div>', esc_html( sprintf( __( 'Imported or updated %1$d rows. Skipped %2$d rows (invalid or not editable).', 'khaiwal' ), absint( $_GET['imported'] ), isset( $_GET['skipped'] ) ? absint( $_GET['skipped'] ) : 0 ) ) );
@@ -83,7 +84,7 @@ function khaiwal_import_screen() {
 }
 
 function khaiwal_import_results() {
-    if ( ! current_user_can( 'publish_posts' ) ) { wp_die( esc_html__( 'Not allowed.', 'khaiwal' ), '', array( 'response' => 403 ) ); }
+    if ( ! current_user_can( khaiwal_publish_capability() ) ) { wp_die( esc_html__( 'Not allowed.', 'khaiwal' ), '', array( 'response' => 403 ) ); }
     check_admin_referer( 'khaiwal_import' );
     if ( empty( $_FILES['results_csv']['tmp_name'] ) || ! is_string( $_FILES['results_csv']['tmp_name'] ) || ! isset( $_FILES['results_csv']['name'], $_FILES['results_csv']['size'] ) || ! is_string( $_FILES['results_csv']['name'] ) || ! is_numeric( $_FILES['results_csv']['size'] ) || ! is_uploaded_file( $_FILES['results_csv']['tmp_name'] ) || ! empty( $_FILES['results_csv']['error'] ) || $_FILES['results_csv']['size'] > 2 * MB_IN_BYTES || strtolower( pathinfo( sanitize_file_name( $_FILES['results_csv']['name'] ), PATHINFO_EXTENSION ) ) !== 'csv' ) {
         wp_die( esc_html__( 'Please upload a CSV file smaller than 2 MB.', 'khaiwal' ), '', array( 'response' => 400 ) );
@@ -111,7 +112,7 @@ function khaiwal_import_results() {
         $existing = get_posts( array( 'post_type' => 'khaiwal_result', 'post_status' => 'publish', 'posts_per_page' => 1, 'fields' => 'ids', 'meta_query' => array(
             array( 'key' => '_khaiwal_game', 'value' => $slug ), array( 'key' => '_khaiwal_date', 'value' => $date ),
         ) ) );
-        $data = array( 'post_type' => 'khaiwal_result', 'post_status' => 'publish', 'post_title' => $games[ $slug ]['name'] . ' – ' . $date );
+        $data = array( 'post_type' => 'khaiwal_result', 'post_status' => 'publish', 'post_title' => khaiwal_result_title( $games[ $slug ]['name'], $date ) );
         if ( $existing ) { if ( ! current_user_can( 'edit_post', $existing[0] ) ) { $skipped++; continue; } $data['ID'] = $existing[0]; }
         $id = wp_insert_post( $data, true );
         if ( is_wp_error( $id ) ) { $skipped++; continue; }
@@ -120,7 +121,7 @@ function khaiwal_import_results() {
         update_post_meta( $id, '_khaiwal_number', $number );
         $imported++;
     }
-    wp_safe_redirect( add_query_arg( array( 'post_type' => 'khaiwal_result', 'page' => 'khaiwal-import', 'imported' => $imported, 'skipped' => $skipped ), admin_url( 'edit.php' ) ) );
+    wp_safe_redirect( add_query_arg( array( 'page' => 'khaiwal-import', 'imported' => $imported, 'skipped' => $skipped ), admin_url( 'admin.php' ) ) );
     exit;
 }
 add_action( 'admin_post_khaiwal_import_results', 'khaiwal_import_results' );

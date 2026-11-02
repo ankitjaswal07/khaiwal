@@ -14,6 +14,8 @@
         <div class="container utility-inner">
             <span class="utility-message"><span class="status-dot"></span><?php echo khaiwal_text( 'YOUR EVERYDAY RESULTS DESTINATION', 'आपके रोज़ाना रिज़ल्ट की जगह' ); ?></span>
             <div class="utility-right">
+                <?php get_template_part( 'template-parts/utility', 'account' ); ?>
+                <span class="utility-divider"></span>
                 <span class="utility-clock"><?php echo khaiwal_icon( 'clock' ); ?> <time data-ist-clock><?php echo esc_html( khaiwal_now()->format( 'D, M j, Y  •  g:i A' ) ); ?></time> <span>IST</span></span>
                 <span class="utility-divider"></span>
                 <div class="language-switch" role="group" aria-label="Language / भाषा">
@@ -36,7 +38,7 @@
                         <li><a class="nav-pill <?php echo is_front_page() ? 'is-active' : ''; ?>" <?php echo is_front_page() ? 'aria-current="page"' : ''; ?> href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo khaiwal_text( 'Home', 'होम' ); ?></a></li>
                         <li><a class="nav-pill <?php echo ( is_page( 'chart' ) || is_page_template( 'page-chart.php' ) || is_singular( 'khaiwal_game' ) ) ? 'is-active' : ''; ?>" <?php echo ( is_page( 'chart' ) || is_page_template( 'page-chart.php' ) ) ? 'aria-current="page"' : ( is_singular( 'khaiwal_game' ) ? 'aria-current="location"' : '' ); ?> href="<?php echo esc_url( khaiwal_chart_url() ); ?>"><?php echo khaiwal_text( 'Chart', 'चार्ट' ); ?></a></li>
                         <li><a class="nav-pill <?php echo ( is_page( 'contact' ) || is_page_template( 'page-contact.php' ) ) ? 'is-active' : ''; ?>" <?php echo ( is_page( 'contact' ) || is_page_template( 'page-contact.php' ) ) ? 'aria-current="page"' : ''; ?> href="<?php echo esc_url( khaiwal_contact_url() ); ?>"><?php echo khaiwal_text( 'Contact', 'संपर्क' ); ?></a></li>
-                        <li><a class="nav-pill" href="<?php echo esc_url( wp_login_url() ); ?>" target="_blank" rel="noopener"><?php echo khaiwal_text( 'Login', 'लॉगिन' ); ?> <?php echo khaiwal_text( '(opens in a new tab)', '(नई टैब में खुलेगा)', 'span', 'screen-reader-text' ); ?></a></li>
+
                     </ul>
                 <?php endif; ?>
             </nav>

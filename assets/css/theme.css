@@ -65,3 +65,28 @@
 /* Secondary text is intentionally muted, but keeps accessible contrast. */
 .utility-clock>span{color:#a8aa9f}.dark-eyebrow .section-number{color:#6c6a4e}.section-heading p,.directory-heading p,.chart-section-heading p,.contact-intro>p{color:#65685e}.game-title p{color:#66695e}.full-result-table thead th small{color:#62655a}.full-result-table td.is-unavailable{color:#707267}.discover-features b{color:#a2a497}.story-meta{color:#686b60}.story-meta span{color:#806b00}.story-card p{color:#66695e}.faq-intro>p{color:#66695e}.footer-links h3{color:#9b9d90}.breadcrumb>span{color:#a4a69a}.directory-count{color:#66695e}.month-card thead th{color:#65685e}.month-card tbody th{color:#696b60}.month-card .no-number{color:#727469}.contact-callout p,.contact-card>p{color:#66695e}.page-hero-number::before{content:attr(data-number)}
 @media(max-width:360px){.game-card-top{gap:7px;align-items:flex-start}.game-monogram{width:34px;height:34px}.game-title h3{overflow:visible;white-space:normal;overflow-wrap:anywhere;line-height:1.2}.card-arrow{width:24px;height:24px}}
+
+/* Top-bar account links + SEO answer blocks (v1.2) */
+.utility-account{display:flex;align-items:center;gap:14px}
+.utility-link{display:inline-flex;align-items:center;gap:5px;color:#d6d8cd;font-size:10px;font-weight:700;letter-spacing:.02em;line-height:1;min-height:24px;text-decoration:none;white-space:nowrap}
+.utility-link .icon{width:13px;height:13px;color:var(--yellow)}
+.utility-link:hover,.utility-link:focus-visible{color:var(--yellow)}
+.utility-link-publish{color:var(--yellow)}
+.utility-link-publish:hover,.utility-link-publish:focus-visible{color:#fff}
+@media(max-width:700px){.utility-inner{height:auto;flex-wrap:wrap;padding-block:3px}.utility-right{width:100%;flex-wrap:wrap;row-gap:0}.utility-account{order:-1;width:100%;gap:18px}.utility-account+.utility-divider{display:none}.utility-link{font-size:11px;min-height:28px}}
+.answer-block{margin:34px 0 0;padding:22px 24px;border:1px solid #e4e0c6;border-left:4px solid var(--yellow);border-radius:14px;background:#fffdf0;color:#1c1d18}
+.answer-block h2,.answer-block h3{margin:0 0 8px;font-size:18px;line-height:1.3}
+.answer-block p{margin:0 0 8px;font-size:15px;line-height:1.65;color:#2b2c26}
+.answer-block p:last-child{margin-bottom:0}
+.answer-block .answer-meta{font-size:13px;color:#5d5f55}
+.answer-block strong.answer-number{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1.1em;letter-spacing:.06em}
+.answer-block dl{margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 18px}
+.answer-block dt{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6c6a4e}
+.answer-block dd{margin:2px 0 0;font-size:16px;font-weight:700}
+.game-faq{margin-top:40px}
+.game-faq h2{margin:0 0 14px;font-size:clamp(22px,3vw,30px);line-height:1.2}
+.game-faq details{border-bottom:1px solid #e1e1d6;padding:2px 0}
+.game-faq summary{cursor:pointer;padding:14px 0;font-weight:700;font-size:16px}
+.game-faq details p{margin:0 0 16px;line-height:1.7;color:#3b3c35}
+.about-game{margin-top:32px}.about-game h2{margin:0 0 10px;font-size:clamp(20px,2.6vw,26px)}.about-game p{line-height:1.75;color:#3b3c35;max-width:78ch}
+.api-note{margin-top:18px;font-size:13px;color:#5d5f55}.api-note a{text-decoration:underline;text-underline-offset:3px}

@@ -1,13 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-$faqs = apply_filters( 'khaiwal_home_faqs', array(
-    array( 'How are results updated?', 'रिज़ल्ट कैसे अपडेट होते हैं?', 'Results appear when an editor publishes them in WordPress or imports a CSV. The bundled A1-Satta history is a dated snapshot, not an automatic live feed.', 'संपादक द्वारा वर्डप्रेस में प्रकाशित करने या CSV आयात करने पर रिज़ल्ट दिखते हैं। A1-Satta का पुराना डेटा एक दिनांकित संग्रह है, लाइव फ़ीड नहीं।' ),
-    array( 'How do I use the result chart?', 'रिज़ल्ट चार्ट कैसे देखें?', 'Choose a game, month and year in the full chart, then select View results. You can also choose All games to compare them by date.', 'पूरे चार्ट में गेम, महीना और साल चुनें, फिर रिज़ल्ट देखें पर क्लिक करें। तारीख के अनुसार तुलना के लिए सभी गेम भी चुन सकते हैं।' ),
-    array( 'What does a dash mean?', 'डैश का क्या मतलब है?', 'A dash means a verified result is not available for that game and date. It is not a predicted number.', 'डैश का मतलब है कि उस गेम और तारीख का सत्यापित रिज़ल्ट उपलब्ध नहीं है। यह कोई अनुमानित नंबर नहीं है।' ),
-    array( 'How are the current and next games chosen?', 'मौजूदा और अगला गेम कैसे चुना जाता है?', 'They follow the game times listed in India Standard Time. Scheduled times are informational and do not guarantee when a result will be published.', 'ये भारत के मानक समय के अनुसार सूचीबद्ध गेम समय पर आधारित हैं। समय केवल जानकारी के लिए है और रिज़ल्ट प्रकाशित होने की गारंटी नहीं है।' ),
-    array( 'Can I view previous months?', 'क्या मैं पिछले महीनों के रिज़ल्ट देख सकता हूँ?', 'Yes. Select a month and year in the chart, or open a game page. Only available or editor-published records are shown.', 'हाँ। चार्ट में महीना और साल चुनें या किसी गेम का पेज खोलें। केवल उपलब्ध या संपादक द्वारा प्रकाशित रिकॉर्ड दिखते हैं।' ),
-    array( 'Can past results predict future results?', 'क्या पुराने रिज़ल्ट से भविष्य का पता चल सकता है?', 'No. Past results are historical records and cannot reliably predict or guarantee future outcomes.', 'नहीं। पुराने रिज़ल्ट केवल ऐतिहासिक रिकॉर्ड हैं और वे भविष्य के परिणाम की विश्वसनीय भविष्यवाणी या गारंटी नहीं देते।' ),
-) );
+$faqs = khaiwal_home_faqs();
 ?>
 <section id="faqs" class="section faq-section">
     <div class="container faq-layout">
